@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "558560436253",
+    "project_id": "liquify-rubicone",
+    "storage_bucket": "liquify-rubicone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558560436253:android:0cdde2376f6b0b3842e6f4",
+        "android_client_info": {
+          "package_name": "com.SterletSausage.liquify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558560436253-9n0me10rm6i98fg373jj663s4sh4gg09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdvzNuzxSSJSpZJ9ADaRiDtFm_VCM_E_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558560436253-9n0me10rm6i98fg373jj663s4sh4gg09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
