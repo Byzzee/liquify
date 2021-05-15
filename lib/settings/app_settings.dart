@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:liquify/services/database_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
+const _kGitHubLink = 'https://github.com/Byzzee/liquify';
+Future<bool> openGitHub() async {
+  if (await canLaunch(_kGitHubLink)) {
+    await launch(_kGitHubLink);
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 
 
 final kMainColor1 = Color(0xFF0066FF);
@@ -140,7 +153,7 @@ class AppSettings with ChangeNotifier {
   AppSettings._internal();
 
   ThemeData _themeData = _lightTheme;
-  get themeData => _themeData;
+  ThemeData get themeData => _themeData;
   set themeData(ThemeData value) {
     _themeData = value;
     _themeData == _lightTheme ? _isDark = false : _isDark = true;
@@ -149,7 +162,7 @@ class AppSettings with ChangeNotifier {
   }
 
   bool _isDark;
-  get isDark => _isDark;
+  bool get isDark => _isDark;
   set isDark(bool value) {
     _isDark = value;
     _isDark ? _themeData = _darkTheme : _themeData = _lightTheme;

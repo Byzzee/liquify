@@ -52,10 +52,15 @@ class _QuickAddDialogState extends State<QuickAddDialog> {
                       children: <Widget>[
                         // Заголовок
                         Padding(
-                          padding: EdgeInsets.only(left: widget.size.width * 0.02),
+                          padding: EdgeInsets.only(left: widget.size.width * 0.02, top: widget.size.height * 0.01),
                           child: Text(
                             'Объём',
-                            style: Theme.of(context).textTheme.headline2,
+                            style: TextStyle(
+                              color: context.read<AppSettings>().isDark ? kLightColor2 : Colors.black54,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'OpenSans',
+                            ),
                           ),
                         ),
                         SizedBox(height: widget.size.height * 0.015),
@@ -117,7 +122,7 @@ class _QuickAddDialogState extends State<QuickAddDialog> {
                           child: Text(
                             'Отмена',
                             style: TextStyle(
-                              color: Colors.white54,
+                              color: context.read<AppSettings>().isDark ? Colors.white54 : Colors.black45,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'OpenSans',
                               fontSize: 16.0
@@ -150,7 +155,7 @@ class _QuickAddDialogState extends State<QuickAddDialog> {
                           child: Text(
                             'Добавить',
                             style: TextStyle(
-                              color: context.watch<QuickAddModel>().addButtonEnabled ? kMainColor1 : Colors.white54,
+                              color: context.watch<QuickAddModel>().addButtonEnabled ? kMainColor1 : (context.read<AppSettings>().isDark ? Colors.white54 : Colors.black45),
                               fontWeight: FontWeight.bold,
                               fontFamily: 'OpenSans',
                               fontSize: 16.0

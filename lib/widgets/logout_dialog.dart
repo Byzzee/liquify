@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liquify/services/authentication.dart';
+import 'package:liquify/settings/app_settings.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 
@@ -54,6 +55,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
                     child: Text(
                       'Выйти из аккаунта',
                       style: TextStyle(
+                        color: context.read<AppSettings>().isDark ? Colors.white70 : Colors.black87,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'OpenSans',
                         fontSize: 22.0
@@ -71,7 +73,7 @@ class _LogoutDialogState extends State<LogoutDialog> {
                         child: Text(
                           'Отмена',
                           style: TextStyle(
-                            color: Colors.white54,
+                            color: context.read<AppSettings>().isDark ? Colors.white54 : Colors.black54,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'OpenSans',
                             fontSize: 16.0
