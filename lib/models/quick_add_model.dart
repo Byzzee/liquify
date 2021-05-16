@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 /// Модель для [QuickAddDialog]
 class QuickAddModel with ChangeNotifier {
-  /// Контроллер ввода для объёма выпитой жидеости
+  /// Контроллер ввода для объёма выпитой жидкости
   final TextEditingController bulkController = TextEditingController();
 
   bool _addButtonEnabled = false;

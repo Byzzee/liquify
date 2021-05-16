@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
@@ -10,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
@@ -19,8 +19,17 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: График по выпитым напиткам
     final _size = MediaQuery.of(context).size;
+    int _waterNorm = context.watch<DocumentSnapshot>() != null
+        ? context.watch<DocumentSnapshot>().data()['waterNorm']
+        : 0;
+    int _totalDrinkAmount = 0;
+    if (context.watch<QuerySnapshot>() != null) {
+      for (var doc in context.watch<QuerySnapshot>().docs) {
+        _totalDrinkAmount += doc['amount'];
+      }
+    }
+    int _waterPercentage = (_totalDrinkAmount/_waterNorm*100).round();
 
     return ChangeNotifierProvider<MainModel>(
       create: (_) => MainModel(),
@@ -46,7 +55,7 @@ class _MainPageState extends State<MainPage> {
                   borderColor: kExtraColor3,
                   borderRadius: 32.0,
                   borderWidth: 1.0,
-                  value: 0.5,
+                  value: _waterPercentage / 100,
                 ),
               ),
               Positioned(
@@ -56,7 +65,7 @@ class _MainPageState extends State<MainPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '0Л · 0%',
+                      '$_totalDrinkAmount мл · $_waterPercentage%',
                       style: TextStyle(
                         fontSize: 16.0,
                         color: kExtraColor3,
@@ -65,7 +74,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     Text(
-                      'Осталось: 1,93Л',
+                      'Осталось: ${(_waterNorm - _totalDrinkAmount) < 0 ? 0 : (_waterNorm - _totalDrinkAmount)} мл',
                       style: TextStyle(
                         fontSize: 16.0,
                         color: kExtraColor3,
@@ -74,7 +83,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     )
                   ],
-                ),
+                )
               ),
               Positioned(
                 top: _size.height * 0.55,
@@ -89,7 +98,8 @@ class _MainPageState extends State<MainPage> {
                         showTopSnackBar(
                           context,
                           CustomSnackBar.info(
-                            message: 'Эта кнопка абсолютно ничего не делает. Нет смысла нажимать на неё!',
+                            message:
+                              'Эта кнопка абсолютно ничего не делает. Нет смысла нажимать на неё!',
                             backgroundColor: const Color(0xFFDDC000),
                             textStyle: TextStyle(
                               color: const Color(0xFF6D5F00),
@@ -112,10 +122,12 @@ class _MainPageState extends State<MainPage> {
                     ),
                     GradientButton(
                       callback: () {
-                        //TODO: Диалоговое окно быстрого добавления напитка
-                        showDialog(context: context, builder: (context) {
-                          return QuickAddDialog(size: _size);
-                        });
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return QuickAddDialog(size: _size);
+                          }
+                        );
                       },
                       gradient: kDefaultGradient,
                       shadowColor: Colors.transparent,

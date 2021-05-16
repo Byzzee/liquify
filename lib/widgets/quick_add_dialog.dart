@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:liquify/models/drink.dart';
 import 'package:liquify/models/quick_add_model.dart';
+import 'package:liquify/services/firestore/firestore_drink_service.dart';
 import 'package:liquify/settings/app_settings.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -132,8 +134,13 @@ class _QuickAddDialogState extends State<QuickAddDialog> {
                         // ignore: deprecated_member_use
                         FlatButton(
                           onPressed: () {
-                            // TODO: Сделать кнопку небесполезной
                             if (context.read<QuickAddModel>().addButtonEnabled) {
+                              FirestoreDrinkService.drinkWater(
+                                Drink(
+                                  DateTime.now(),
+                                  int.parse(context.read<QuickAddModel>().bulkController.text)
+                                )
+                              );
                               showTopSnackBar(
                                 context,
                                 CustomSnackBar.success(

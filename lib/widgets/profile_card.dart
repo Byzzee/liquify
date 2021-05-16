@@ -7,7 +7,7 @@ class ProfileCard extends StatelessWidget {
   final Size size;
   final String login;
   final String email;
-  final double daily;
+  final int daily;
   final Widget logoutButton;
 
   @override
@@ -60,7 +60,7 @@ class ProfileCard extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'Дневная цель: $dailyЛ',
+              'Дневная цель: $daily мл',
               style: TextStyle(
                 fontSize: 12.0,
                 color: Theme.of(context).backgroundColor,

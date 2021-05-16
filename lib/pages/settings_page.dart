@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:liquify/settings/app_settings.dart';
 import 'package:liquify/widgets/logout_dialog.dart';
 import 'package:liquify/widgets/profile_card.dart';
 import 'package:liquify/widgets/settings_item.dart';
+import 'package:liquify/widgets/update_water_norm_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -20,6 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     bool _isDark = context.read<AppSettings>().isDark;
     Size _size = MediaQuery.of(context).size;
+    int _waterNorm = context.watch<DocumentSnapshot>() != null
+        ? context.watch<DocumentSnapshot>().data()['waterNorm']
+        : 0;
 
     return SafeArea(
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -31,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
           size: _size,
           login: '${context.watch<User>().displayName}',
           email: '${context.watch<User>().email}',
-          daily: 1.93,
+          daily: _waterNorm,
           // ignore: deprecated_member_use
           logoutButton: FlatButton(
             onPressed: () {
@@ -66,6 +71,31 @@ class _SettingsPageState extends State<SettingsPage> {
               context.read<AppSettings>().isDark = _isDark;
             },
           )
+        ),
+        SizedBox(
+          height: _size.height * 0.025,
+          width: double.infinity,
+        ),
+        SettingsItem(
+          size: _size,
+          icon: FontAwesomeIcons.tint,
+          title: 'Изменить дневную цель',
+          trailing: IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return UpdateWaterNormDialog(size: _size);
+                }
+              );
+            },
+            icon: Icon(
+              FontAwesomeIcons.arrowAltCircleRight,
+              color: kLightColor2,
+            ),
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+          ),
         ),
         SizedBox(
           height: _size.height * 0.025,
